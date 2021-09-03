@@ -69,7 +69,6 @@ public abstract class BaseRepositoryImpl<E extends BaseDomain<ID>, ID extends Se
 
     @Override
     public EntityManager getEntityManager() {
-        if (entityManager != null) entityManager.close();
         entityManager = entityManagerFactory.createEntityManager();
         return entityManager;
     }
