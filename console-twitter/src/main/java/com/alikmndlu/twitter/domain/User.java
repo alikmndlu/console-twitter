@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = User.TABLE_NAME)
@@ -32,6 +34,15 @@ public class User extends BaseDomain<Long> {
 
     @Column(name = User.PASSWORD, nullable = false)
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Twit> twits = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Like> likes;
 
     public User() {
     }

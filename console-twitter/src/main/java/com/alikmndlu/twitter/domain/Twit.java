@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = Twit.TABLE_NAME)
@@ -20,6 +21,12 @@ public class Twit extends BaseDomain<Long> {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "twit")
+    private Set<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "twit")
+    private Set<Like> likes;
 
     public Twit() {
     }
