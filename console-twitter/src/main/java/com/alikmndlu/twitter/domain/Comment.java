@@ -22,4 +22,12 @@ public class Comment extends BaseDomain<Long> {
 
     @ManyToOne
     private User user;
+
+    public Comment() {}
+
+    public Comment(String text, Twit twit, User user) {
+        this.text = text;
+        this.twit = twit;
+        this.user = user;
+    }
 }

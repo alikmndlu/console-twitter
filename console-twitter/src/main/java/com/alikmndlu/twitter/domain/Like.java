@@ -18,4 +18,12 @@ public class Like extends BaseDomain<Long> {
 
     @ManyToOne
     private Twit twit;
+
+    public Like() {
+    }
+
+    public Like(User user, Twit twit) {
+        this.user = user;
+        this.twit = twit;
+    }
 }

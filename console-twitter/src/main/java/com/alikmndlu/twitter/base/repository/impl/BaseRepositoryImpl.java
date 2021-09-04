@@ -14,7 +14,7 @@ public abstract class BaseRepositoryImpl<E extends BaseDomain<ID>, ID extends Se
         implements BaseRepository<E, ID> {
 
     private final EntityManagerFactory entityManagerFactory;
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public BaseRepositoryImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
