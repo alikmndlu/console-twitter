@@ -10,6 +10,7 @@ import com.alikmndlu.twitter.service.LikeService;
 import com.alikmndlu.twitter.util.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ public class LikeServiceImpl extends BaseServiceImpl<Like, Long, LikeRepository>
     @Override
     public void viewLikedTwits() {
         List<Like> likedTwits = new ArrayList<>(Authenticate.getLoggedInUser().getLikes());
+        likedTwits.sort(Comparator.comparing(Like::getCreateAt).reversed());
 
         if (likedTwits.size() == 0) {
             System.out.println("\nThere Is No Like Yet!");
@@ -37,6 +39,7 @@ public class LikeServiceImpl extends BaseServiceImpl<Like, Long, LikeRepository>
     @Override
     public void unlikeTwit() {
         List<Like> likedTwits = new ArrayList<>(Authenticate.getLoggedInUser().getLikes());
+        likedTwits.sort(Comparator.comparing(Like::getCreateAt).reversed());
 
         if (likedTwits.size() == 0) {
             System.out.println("\nThere Is No Like Yet!");

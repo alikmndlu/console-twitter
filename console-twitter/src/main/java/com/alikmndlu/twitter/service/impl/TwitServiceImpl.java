@@ -11,7 +11,10 @@ import com.alikmndlu.twitter.service.TwitService;
 import com.alikmndlu.twitter.service.UserService;
 import com.alikmndlu.twitter.util.ApplicationContext;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +43,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
 
     @Override
     public void viewTwits() {
-        List<Twit> twits = new ArrayList<>(Authenticate.getLoggedInUser().getTwits());
+        List<Twit> twits = getUserTwits(Authenticate.getLoggedInUser());
 
         if (twits.size() == 0) {
             System.out.println("\nThere Is No Twit Yet!");
@@ -49,40 +52,13 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         }
 
         System.out.println();
-        int it = 1;
-        for (Twit twit : twits) {
-            System.out.println(it + ".  " + twit.getText());
-
-            System.out.println("\n\tLikes Count : " + twit.getLikes().size());
-            if (twit.getLikes().size() > 0) {
-                int il = 1;
-                for (Like like : twit.getLikes()) {
-                    System.out.println("\t\t" + il + ".  " + like.getUser().getUsername() + " [ " + like.getUser().getFirstName() + " " + like.getUser().getLastName() + " ]");
-                    il++;
-                }
-            }
-
-            System.out.println("\n\tComment Count : " + twit.getComments().size());
-            if (twit.getComments().size() > 0) {
-                int ic = 1;
-                for (Comment comment : twit.getComments()) {
-                    System.out.println("\t\t" + ic + ".  " + comment.getText() + " ( " + comment.getUser().getUsername() + " [ " + comment.getUser().getFirstName() + " " + comment.getUser().getLastName() + " ] )");
-                    ic++;
-                }
-            }
-
-            if (it != twits.size()) {
-                System.out.println("\n\n");
-            }
-
-            it++;
-        }
+        printTwitsWithDetails(twits);
         ApplicationContext.menu.returnToDashboardAnnouncement();
     }
 
     @Override
     public void editTwits() {
-        List<Twit> twits = new ArrayList<>(Authenticate.getLoggedInUser().getTwits());
+        List<Twit> twits = getUserTwits(Authenticate.getLoggedInUser());
 
         if (twits.size() == 0) {
             System.out.println("\nThere Is No Twit Yet!");
@@ -91,12 +67,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         }
 
         System.out.println();
-        int it = 1;
-        for (Twit twit : twits) {
-            System.out.println(it + ".  " + twit.getText());
-            if (it != twits.size()) System.out.println();
-            it++;
-        }
+        printTwitsWithoutDetail(twits);
 
         System.out.println("\nEnter -1 For Quit From 'Edit Twit' Section.");
         System.out.println("Enter Twit Index To Edit : ");
@@ -154,5 +125,56 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         twit.setText(updatedText);
         saveOrUpdate(twit);
         System.out.println("\nTwit Text Update Successfully.");
+    }
+
+    private List<Twit> getUserTwits(User user){
+        List<Twit> twits = new ArrayList<>(user.getTwits());
+        twits.sort(Comparator.comparing(Twit::getCreateAt).reversed());
+        return twits;
+    }
+
+    private void printTwitsWithDetails(List<Twit> twits){
+        int it = 1;
+        for (Twit twit : twits) {
+            System.out.println(it + ".  " + twit.getText());
+
+            System.out.println("\n\tLikes Count : " + twit.getLikes().size());
+            if (twit.getLikes().size() > 0) {
+                List<Like> likes = new ArrayList<>(twit.getLikes());
+                likes.sort(Comparator.comparing(Like::getCreateAt).reversed());
+                int il = 1;
+                for (Like like : likes) {
+                    System.out.println("\t\t" + il + ".  " + like.getUser().getUsername() + " [ " + like.getUser().getFirstName() + " " + like.getUser().getLastName() + " ]");
+                    il++;
+                }
+            }
+
+            System.out.println("\n\tComment Count : " + twit.getComments().size());
+            if (twit.getComments().size() > 0) {
+                List<Comment> comments = new ArrayList<>(twit.getComments());
+                comments.sort(Comparator.comparing(Comment::getCreateAt).reversed());
+                int ic = 1;
+                for (Comment comment : comments) {
+                    System.out.println("\t\t" + ic + ".  " + comment.getText() + " ( " + comment.getUser().getUsername() + " [ " + comment.getUser().getFirstName() + " " + comment.getUser().getLastName() + " ] )");
+                    ic++;
+                }
+            }
+
+            System.out.println("\n\tPosted At : " + twit.getCreateAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
+
+            if (it != twits.size()) {
+                System.out.println("\n\n");
+            }
+            it++;
+        }
+    }
+
+    private void printTwitsWithoutDetail(List<Twit> twits){
+        int it = 1;
+        for (Twit twit : twits) {
+            System.out.println(it + ".  " + twit.getText());
+            if (it != twits.size()) System.out.println();
+            it++;
+        }
     }
 }

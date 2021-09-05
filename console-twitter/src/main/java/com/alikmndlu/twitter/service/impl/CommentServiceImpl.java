@@ -11,6 +11,7 @@ import com.alikmndlu.twitter.service.UserService;
 import com.alikmndlu.twitter.util.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class CommentServiceImpl extends BaseServiceImpl<Comment, Long, CommentRepository>
@@ -23,6 +24,7 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Long, CommentRe
     @Override
     public void viewUserComments() {
         List<Comment> comments = new ArrayList<>(Authenticate.getLoggedInUser().getComments());
+        comments.sort(Comparator.comparing(Comment::getCreateAt).reversed());
 
         if (comments.size() == 0){
             System.out.println("\nThere Is No Comment Yet!");
@@ -43,6 +45,7 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Long, CommentRe
     @Override
     public void editUserComments() {
         List<Comment> comments = new ArrayList<>(Authenticate.getLoggedInUser().getComments());
+        comments.sort(Comparator.comparing(Comment::getCreateAt).reversed());
 
         if (comments.size() == 0) {
             System.out.println("\nThere Is No Comment Yet!");
