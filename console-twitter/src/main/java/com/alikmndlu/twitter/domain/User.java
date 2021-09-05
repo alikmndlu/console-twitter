@@ -3,19 +3,16 @@ package com.alikmndlu.twitter.domain;
 import com.alikmndlu.twitter.base.domain.BaseDomain;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = User.TABLE_NAME)
-@Getter
-@Setter
+@Getter @Setter
 public class User extends BaseDomain<Long> {
+
     public static final String TABLE_NAME = "users";
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";

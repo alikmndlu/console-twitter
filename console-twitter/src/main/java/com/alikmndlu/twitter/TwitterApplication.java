@@ -1,6 +1,5 @@
 package com.alikmndlu.twitter;
 
-import com.alikmndlu.twitter.domain.User;
 import com.alikmndlu.twitter.util.ApplicationContext;
 
 public class TwitterApplication {
