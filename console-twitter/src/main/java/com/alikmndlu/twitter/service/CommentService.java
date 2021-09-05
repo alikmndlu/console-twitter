@@ -6,4 +6,7 @@ import com.alikmndlu.twitter.domain.User;
 
 public interface CommentService extends BaseService<Comment, Long> {
 
+    void viewUserComments();
+
+    void editUserComments();
 }

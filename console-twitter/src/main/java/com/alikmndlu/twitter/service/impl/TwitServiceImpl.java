@@ -2,6 +2,7 @@ package com.alikmndlu.twitter.service.impl;
 
 import com.alikmndlu.twitter.base.service.impl.BaseServiceImpl;
 import com.alikmndlu.twitter.domain.Comment;
+import com.alikmndlu.twitter.domain.Like;
 import com.alikmndlu.twitter.domain.Twit;
 import com.alikmndlu.twitter.domain.User;
 import com.alikmndlu.twitter.repository.TwitRepository;
@@ -47,6 +48,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
             return;
         }
 
+        System.out.println();
         int it = 1;
         for (Twit twit : twits) {
             System.out.println(it + ".  " + twit.getText());
@@ -54,8 +56,8 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
             System.out.println("\n\tLikes Count : " + twit.getLikes().size());
             if (twit.getLikes().size() > 0) {
                 int il = 1;
-                for (Comment comment : twit.getComments()) {
-                    System.out.println("\t\t" + il + ".  " + comment.getUser().getUsername() + " [ " + comment.getUser().getFirstName() + " " + comment.getUser().getLastName() + " ]");
+                for (Like like : twit.getLikes()) {
+                    System.out.println("\t\t" + il + ".  " + like.getUser().getUsername() + " [ " + like.getUser().getFirstName() + " " + like.getUser().getLastName() + " ]");
                     il++;
                 }
             }
@@ -139,7 +141,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
             physicalDelete(twit);
             System.out.println("\nTwit Delete Successfully.");
         }
-        else System.out.println("Invalid Command!");
+        else System.out.println("\nInvalid Command!");
     }
 
     private void editTwit(Twit twit) {
