@@ -3,6 +3,7 @@ package com.alikmndlu.twitter.repository.impl;
 import com.alikmndlu.twitter.base.repository.impl.BaseRepositoryImpl;
 import com.alikmndlu.twitter.domain.User;
 import com.alikmndlu.twitter.repository.UserRepository;
+import com.alikmndlu.twitter.service.impl.Authenticate;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;

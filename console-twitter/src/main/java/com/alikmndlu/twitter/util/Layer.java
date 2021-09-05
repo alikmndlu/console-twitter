@@ -31,7 +31,8 @@ public class Layer {
             int action = ApplicationContext.helper.readInteger("-> ");
 
             switch (action){
-                case 1 -> quit = true;
+                case 1 -> ApplicationContext.userService.editPersonalInformation();
+                case 2 -> quit = true;
                 default -> System.out.println("Invalid Command!");
             }
         }

@@ -12,4 +12,8 @@ public interface UserService extends BaseService<User, Long> {
     void register();
 
     Optional<User> findByUsername(String username);
+
+    void editPersonalInformation();
+
+    void refreshUser();
 }

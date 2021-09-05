@@ -40,4 +40,5 @@ public final class ApplicationContext {
     public static final Helper helper = new Helper();
     public static final Menu menu = new Menu();
     public static final Layer layer = new Layer();
+    public static final DataInitializer dataInitializer = new DataInitializer();
 }

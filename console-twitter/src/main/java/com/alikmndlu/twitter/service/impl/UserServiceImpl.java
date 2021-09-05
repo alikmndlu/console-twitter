@@ -61,4 +61,70 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
         repository.getEntityManager();
         return repository.findByUsername(username);
     }
+
+    @Override
+    public void editPersonalInformation() {
+        User user = Authenticate.getLoggedInUser();
+        boolean quit = false;
+        while (!quit){
+            ApplicationContext.menu.printEditPersonalInformationMenu();
+            int action = ApplicationContext.helper.readInteger("-> ");
+
+            switch (action){
+                case 1 -> {
+                    editFirstName(user);
+                    quit = true;
+                }
+                case 2 -> {
+                    editLastName(user);
+                    quit = true;
+                }
+                case 3 -> {
+                    editPassword(user);
+                    quit = true;
+                }
+                case 4 -> quit = true;
+                default -> System.out.println("Invalid Command!");
+            }
+        }
+        refreshUser();
+        System.out.println("\nInformation Update Successfully.");
+        System.out.println("\nBack To Dashboard...");
+    }
+
+    @Override
+    public void refreshUser() {
+        repository.getEntityManager();
+        Authenticate.setLoggedInUser(repository.findByUsername(Authenticate.getLoggedInUser().getUsername()).get());
+    }
+
+    private void editPassword(User user) {
+        System.out.println("\nCurrent Password : " + user.getPassword());
+        System.out.println("\nEnter -1 For Quit From 'Edit Password' Section.");
+        System.out.println("Enter New Password : ");
+        String updatedPassword = ApplicationContext.scanner.nextLine();
+        if (updatedPassword.equals("-1")) return;
+        user.setPassword(updatedPassword);
+        saveOrUpdate(user);
+    }
+
+    private void editLastName(User user) {
+        System.out.println("\nCurrent Last Name : " + user.getLastName());
+        System.out.println("\nEnter -1 For Quit From 'Edit Last Name' Section.");
+        System.out.println("Enter New Last Name : ");
+        String updatedLastName = ApplicationContext.scanner.nextLine();
+        if (updatedLastName.equals("-1")) return;
+        user.setLastName(updatedLastName);
+        saveOrUpdate(user);
+    }
+
+    private void editFirstName(User user) {
+        System.out.println("\nCurrent First Name : " + user.getFirstName());
+        System.out.println("\nEnter -1 For Quit From 'Edit Last Name' Section.");
+        System.out.println("Enter New First Name : ");
+        String updatedFirstName = ApplicationContext.scanner.nextLine();
+        if (updatedFirstName.equals("-1")) return;
+        user.setFirstName(updatedFirstName);
+        saveOrUpdate(user);
+    }
 }

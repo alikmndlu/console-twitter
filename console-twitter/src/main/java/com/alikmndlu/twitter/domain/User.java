@@ -15,7 +15,6 @@ import java.util.Set;
 @Table(name = User.TABLE_NAME)
 @Getter
 @Setter
-@ToString
 public class User extends BaseDomain<Long> {
     public static final String TABLE_NAME = "users";
     public static final String FIRST_NAME = "first_name";
