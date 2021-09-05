@@ -53,7 +53,7 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Long, CommentRe
         System.out.println();
         int ic = 1;
         for (Comment comment : comments) {
-            System.out.println(ic + ".  " + comment.getText());
+            System.out.println(ic + ".  " + comment.getText() + " -> by {Username:" + comment.getTwit().getUser().getUsername() + ", Name:" + comment.getTwit().getUser().getFirstName() + " " + comment.getTwit().getUser().getLastName() + "}");
             if (ic != comments.size()) System.out.println();
             ic++;
         }

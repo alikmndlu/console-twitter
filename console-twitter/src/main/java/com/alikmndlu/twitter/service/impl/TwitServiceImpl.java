@@ -77,6 +77,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
 
             it++;
         }
+        ApplicationContext.menu.returnToDashboardAnnouncement();
     }
 
     @Override
@@ -130,7 +131,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
             }
         }
         ApplicationContext.userService.refreshUser();
-        System.out.println("\nBack To Dashboard...");
+        ApplicationContext.menu.returnToDashboardAnnouncement();
     }
 
     private void deleteTwit(Twit twit) {

@@ -28,9 +28,11 @@ public class Menu {
         System.out.println("|  3. Edit My Twits             |");
         System.out.println("|  4. View My Comments          |");
         System.out.println("|  5. Edit My Comments          |");
-        System.out.println("|  6. Edit Personal Information |");
-        System.out.println("|  7. Delete Account            |");
-        System.out.println("|  8. LogOut                    |");
+        System.out.println("|  6. View My Likes             |");
+        System.out.println("|  7. Unlike My Likes           |");
+        System.out.println("|  8. Edit Personal Information |");
+        System.out.println("|  9. Delete Account            |");
+        System.out.println("|  10. LogOut                   |");
         System.out.println("+ - - - - - - - - - - - - - - - +");
     }
 

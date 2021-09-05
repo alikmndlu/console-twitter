@@ -6,4 +6,7 @@ import com.alikmndlu.twitter.domain.Like;
 
 public interface LikeService extends BaseService<Like, Long> {
 
+    void viewLikedTwits();
+
+    void unlikeTwit();
 }

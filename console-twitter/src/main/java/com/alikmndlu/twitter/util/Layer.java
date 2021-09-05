@@ -37,9 +37,11 @@ public class Layer {
                 case 3 -> ApplicationContext.twitService.editTwits();
                 case 4 -> ApplicationContext.commentService.viewUserComments();
                 case 5 -> ApplicationContext.commentService.editUserComments();
-                case 6 -> ApplicationContext.userService.editPersonalInformation();
-                case 7 -> ApplicationContext.userService.deleteAccount();
-                case 8 -> {
+                case 6 -> ApplicationContext.likeService.viewLikedTwits();
+                case 7 -> ApplicationContext.likeService.unlikeTwit();
+                case 8 -> ApplicationContext.userService.editPersonalInformation();
+                case 9 -> ApplicationContext.userService.deleteAccount();
+                case 10 -> {
                     Authenticate.loggedOut();
                     quit = true;
                 }
