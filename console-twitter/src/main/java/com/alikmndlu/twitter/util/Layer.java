@@ -27,19 +27,23 @@ public class Layer {
         System.out.println("Welcome " + Authenticate.getLoggedInUser().getFirstName() + " " + Authenticate.getLoggedInUser().getLastName());
         boolean quit = false;
         while (!quit){
+            if (!Authenticate.isLoggedIn()) break;
             ApplicationContext.menu.printUserDashboardMenu();
             int action = ApplicationContext.helper.readInteger("-> ");
 
             switch (action){
-                case 1 -> ApplicationContext.userService.editPersonalInformation();
-                case 2 -> ApplicationContext.twitService.writeTwit();
-                case 3 -> ApplicationContext.twitService.viewTwits();
-                case 4 -> ApplicationContext.twitService.editTwits();
-                case 5 -> quit = true;
+                case 1 -> ApplicationContext.twitService.writeTwit();
+                case 2 -> ApplicationContext.twitService.viewTwits();
+                case 3 -> ApplicationContext.twitService.editTwits();
+                case 4 -> ApplicationContext.userService.editPersonalInformation();
+                case 5 -> ApplicationContext.userService.deleteAccount();
+                case 6 -> {
+                    Authenticate.loggedOut();
+                    quit = true;
+                }
                 default -> System.out.println("Invalid Command!");
             }
         }
-        Authenticate.loggedOut();
-        System.out.println("LoggedOut Successfully.");
+        System.out.println("\nLoggedOut Successfully.");
     }
 }

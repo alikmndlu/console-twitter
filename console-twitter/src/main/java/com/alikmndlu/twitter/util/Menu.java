@@ -19,11 +19,12 @@ public class Menu {
         lineSeparator();
         System.out.println("            Dashboard            ");
         System.out.println("+ - - - - - - - - - - - - - - - +");
-        System.out.println("|  1. Edit Personal Information |");
-        System.out.println("|  2. Write New Twit            |");
-        System.out.println("|  3. View My Twits             |");
-        System.out.println("|  4. Edit My Twits             |");
-        System.out.println("|  5. LogOut                    |");
+        System.out.println("|  1. Write New Twit            |");
+        System.out.println("|  2. View My Twits             |");
+        System.out.println("|  3. Edit My Twits             |");
+        System.out.println("|  4. Edit Personal Information |");
+        System.out.println("|  5. Delete Account            |");
+        System.out.println("|  6. LogOut                    |");
         System.out.println("+ - - - - - - - - - - - - - - - +");
     }
 

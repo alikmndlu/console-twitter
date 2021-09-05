@@ -97,6 +97,24 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
         Authenticate.setLoggedInUser(repository.findByUsername(Authenticate.getLoggedInUser().getUsername()).get());
     }
 
+    @Override
+    public void deleteAccount() {
+        System.out.println("\nAll Of Twits, Comments And Likes Will Be Delete Permanently.");
+        System.out.println("Account Won't Come Back Any More.");
+        System.out.println("Are You Sure (y/n) ?");
+        String input = ApplicationContext.scanner.nextLine();
+        if (input.equals("y")) {
+            physicalDelete(Authenticate.getLoggedInUser());
+            System.out.println("\nAccount Deleted Successfully.");
+            Authenticate.loggedOut();
+        } else if (input.equals("n")){
+            System.out.println("\nBack To Dashboard...");
+        } else {
+            System.out.println("\nInvalid Command!");
+            System.out.println("\nBack To Dashboard...");
+        }
+    }
+
     private void editPassword(User user) {
         System.out.println("\nCurrent Password : " + user.getPassword());
         System.out.println("\nEnter -1 For Quit From 'Edit Password' Section.");

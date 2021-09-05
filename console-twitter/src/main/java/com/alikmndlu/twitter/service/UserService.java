@@ -16,4 +16,6 @@ public interface UserService extends BaseService<User, Long> {
     void editPersonalInformation();
 
     void refreshUser();
+
+    void deleteAccount();
 }
