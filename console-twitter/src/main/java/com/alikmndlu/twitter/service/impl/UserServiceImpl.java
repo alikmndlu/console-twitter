@@ -88,7 +88,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
             }
         }
         refreshUser();
-        System.out.println("\nInformation Update Successfully.");
         System.out.println("\nBack To Dashboard...");
     }
 
@@ -106,6 +105,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
         if (updatedPassword.equals("-1")) return;
         user.setPassword(updatedPassword);
         saveOrUpdate(user);
+        System.out.println("\nPassword Update Successfully.");
     }
 
     private void editLastName(User user) {
@@ -116,15 +116,17 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
         if (updatedLastName.equals("-1")) return;
         user.setLastName(updatedLastName);
         saveOrUpdate(user);
+        System.out.println("\nLast Name Update Successfully.");
     }
 
     private void editFirstName(User user) {
         System.out.println("\nCurrent First Name : " + user.getFirstName());
-        System.out.println("\nEnter -1 For Quit From 'Edit Last Name' Section.");
+        System.out.println("\nEnter -1 For Quit From 'Edit First Name' Section.");
         System.out.println("Enter New First Name : ");
         String updatedFirstName = ApplicationContext.scanner.nextLine();
         if (updatedFirstName.equals("-1")) return;
         user.setFirstName(updatedFirstName);
         saveOrUpdate(user);
+        System.out.println("\nFirst Name Update Successfully.");
     }
 }

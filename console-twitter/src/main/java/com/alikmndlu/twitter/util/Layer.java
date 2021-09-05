@@ -32,7 +32,10 @@ public class Layer {
 
             switch (action){
                 case 1 -> ApplicationContext.userService.editPersonalInformation();
-                case 2 -> quit = true;
+                case 2 -> ApplicationContext.twitService.writeTwit();
+                case 3 -> ApplicationContext.twitService.viewTwits();
+                case 4 -> ApplicationContext.twitService.editTwits();
+                case 5 -> quit = true;
                 default -> System.out.println("Invalid Command!");
             }
         }

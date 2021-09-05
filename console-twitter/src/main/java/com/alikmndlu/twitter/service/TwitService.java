@@ -6,4 +6,9 @@ import com.alikmndlu.twitter.domain.User;
 
 public interface TwitService extends BaseService<Twit, Long> {
 
+    void writeTwit();
+
+    void viewTwits();
+
+    void editTwits();
 }

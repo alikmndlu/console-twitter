@@ -7,8 +7,7 @@ import lombok.NonNull;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class BaseRepositoryImpl<E extends BaseDomain<ID>, ID extends Serializable>
         implements BaseRepository<E, ID> {
@@ -33,11 +32,9 @@ public abstract class BaseRepositoryImpl<E extends BaseDomain<ID>, ID extends Se
     }
 
     @Override
-    public Collection<E> findAll() {
-        return entityManager.createQuery(
-                "from " + getModelClass().getSimpleName(),
-                getModelClass()
-        ).getResultList();
+    public Set<E> findAll() {
+        List<E> resultList = entityManager.createQuery("from " + getModelClass().getSimpleName(), getModelClass()).getResultList();
+        return new HashSet<>(resultList);
     }
 
     @Override

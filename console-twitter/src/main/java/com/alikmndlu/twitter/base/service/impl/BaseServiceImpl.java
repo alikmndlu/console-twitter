@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public abstract class BaseServiceImpl<E extends BaseDomain<ID>, ID extends Serializable, R extends BaseRepository<E, ID>>
         implements BaseService<E, ID> {
@@ -30,7 +31,7 @@ public abstract class BaseServiceImpl<E extends BaseDomain<ID>, ID extends Seria
     }
 
     @Override
-    public Collection<E> findAll() {
+    public Set<E> findAll() {
         repository.getEntityManager();
         return repository.findAll();
     }
@@ -44,9 +45,13 @@ public abstract class BaseServiceImpl<E extends BaseDomain<ID>, ID extends Seria
     @Override
     public void physicalDelete(@NonNull E e) {
         EntityManager entityManager = repository.getEntityManager();
-        entityManager.getTransaction().begin();
-        repository.physicalDelete(e);
-        entityManager.getTransaction().commit();
+        Optional<E> resultRow = repository.findById(e.getId());
+        if (resultRow.isPresent()){
+            e = resultRow.get();
+            entityManager.getTransaction().begin();
+            repository.physicalDelete(e);
+            entityManager.getTransaction().commit();
+        }
     }
 
     @Override

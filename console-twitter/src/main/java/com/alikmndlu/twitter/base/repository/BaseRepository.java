@@ -7,12 +7,13 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public interface BaseRepository<E extends BaseDomain<ID>, ID extends Serializable> {
 
     E saveOrUpdate(E e);
 
-    Collection<E> findAll();
+    Set<E> findAll();
 
     Optional<E> findById(ID id);
 
