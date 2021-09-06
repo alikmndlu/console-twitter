@@ -97,6 +97,17 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Long, CommentRe
         System.out.println("\nBack To Dashboard...");
     }
 
+    @Override
+    public void PostComment(Twit twit, User user) {
+        System.out.println("\nWrite Comment : ");
+        String commentText = ApplicationContext.scanner.nextLine();
+        Comment comment = new Comment(commentText, twit, user);
+        saveOrUpdate(comment);
+        ApplicationContext.userService.refreshUser();
+        System.out.println("\nComment Post Successfully.");
+        ApplicationContext.menu.returnToDashboardAnnouncement();
+    }
+
     private void deleteComment(Comment comment) {
         System.out.println("\nAre You Sure (y/n) ?");
         String input = ApplicationContext.scanner.nextLine();

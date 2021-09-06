@@ -9,10 +9,7 @@ import com.alikmndlu.twitter.repository.LikeRepository;
 import com.alikmndlu.twitter.service.LikeService;
 import com.alikmndlu.twitter.util.ApplicationContext;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class LikeServiceImpl extends BaseServiceImpl<Like, Long, LikeRepository>
         implements LikeService {
@@ -76,6 +73,38 @@ public class LikeServiceImpl extends BaseServiceImpl<Like, Long, LikeRepository>
         else System.out.println("\nInvalid Command!");
         ApplicationContext.userService.refreshUser();
         ApplicationContext.menu.returnToDashboardAnnouncement();
+    }
+
+    @Override
+    public boolean isUserLikedTwit(User user, Twit twit) {
+        for (Like like : user.getLikes()){
+            if (like.getTwit().getId().equals(twit.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void unlike(Twit twit, User user) {
+        Optional<Like> like = findUserLikedTwit(twit, user);
+        if (like.isEmpty()){
+            return;
+        }
+        physicalDelete(like.get());
+        System.out.println("\nTwit Unlike Successfully.");
+    }
+
+    @Override
+    public Optional<Like> findUserLikedTwit(Twit twit, User user) {
+        repository.getEntityManager();
+        return repository.findUserLikedTwit(twit, user);
+    }
+
+    @Override
+    public void like(Twit twit, User user) {
+        saveOrUpdate(new Like(user, twit));
+        System.out.println("\nTwit Like Successfully.");
     }
 
     private void printUserLikedTwits(List<Like> likedTwits) {

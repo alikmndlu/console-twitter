@@ -33,15 +33,17 @@ public class Layer {
 
             switch (action){
                 case 1 -> ApplicationContext.twitService.writeTwit();
-                case 2 -> ApplicationContext.twitService.viewTwits();
-                case 3 -> ApplicationContext.twitService.editTwits();
-                case 4 -> ApplicationContext.commentService.viewUserComments();
-                case 5 -> ApplicationContext.commentService.editUserComments();
-                case 6 -> ApplicationContext.likeService.viewLikedTwits();
-                case 7 -> ApplicationContext.likeService.unlikeTwit();
-                case 8 -> ApplicationContext.userService.editPersonalInformation();
-                case 9 -> ApplicationContext.userService.deleteAccount();
-                case 10 -> {
+                case 2 -> ApplicationContext.twitService.viewAllTwits();
+//                case 3 -> ApplicationContext.twitService.writeTwit();
+                case 4 -> ApplicationContext.twitService.viewTwits();
+                case 5 -> ApplicationContext.twitService.editTwits();
+                case 6 -> ApplicationContext.commentService.viewUserComments();
+                case 7 -> ApplicationContext.commentService.editUserComments();
+                case 8 -> ApplicationContext.likeService.viewLikedTwits();
+                case 9 -> ApplicationContext.likeService.unlikeTwit();
+                case 10 -> ApplicationContext.userService.editPersonalInformation();
+                case 11 -> ApplicationContext.userService.deleteAccount();
+                case 12 -> {
                     Authenticate.loggedOut();
                     quit = true;
                 }

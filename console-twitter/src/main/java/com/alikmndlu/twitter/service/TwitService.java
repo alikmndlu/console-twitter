@@ -11,4 +11,6 @@ public interface TwitService extends BaseService<Twit, Long> {
     void viewTwits();
 
     void editTwits();
+
+    void viewAllTwits();
 }

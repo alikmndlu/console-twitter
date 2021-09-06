@@ -13,10 +13,7 @@ import com.alikmndlu.twitter.util.ApplicationContext;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         implements TwitService {
@@ -105,6 +102,67 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         ApplicationContext.menu.returnToDashboardAnnouncement();
     }
 
+    @Override
+    public void viewAllTwits() {
+        List<Twit> twits = new ArrayList<>(findAll());
+
+        if (twits.size() == 0){
+            System.out.println("There Is No Twit Yet!");
+            return;
+        }
+
+        printTwitsWithoutDetail(twits);
+        Optional<Twit> twit = selectTwitInList(twits, "View Twits", "View Details");
+        if (twit.isEmpty()){
+            return;
+        }
+
+        printTwitWithDetails(twit.get());
+        boolean isUserLikedThisTwit = ApplicationContext.likeService.isUserLikedTwit(Authenticate.getLoggedInUser(), twit.get());
+
+        boolean quit = false;
+        while (!quit){
+            ApplicationContext.menu.printViewTwitMenu(isUserLikedThisTwit);
+            int action = ApplicationContext.helper.readInteger("-> ");
+
+            switch (action){
+                case 1 -> {
+                    ApplicationContext.commentService.PostComment(twit.get(), Authenticate.getLoggedInUser());
+                    quit = true;
+                }
+                case 2 -> {
+                    if (isUserLikedThisTwit){
+                        ApplicationContext.likeService.unlike(twit.get(), Authenticate.getLoggedInUser());
+                    } else {
+                        ApplicationContext.likeService.like(twit.get(), Authenticate.getLoggedInUser());
+                    }
+                    quit = true;
+                }
+                case 3 -> quit = true;
+                default -> System.out.println("Invalid Command!");
+            }
+        }
+        ApplicationContext.userService.refreshUser();
+        ApplicationContext.menu.returnToDashboardAnnouncement();
+    }
+
+    private Optional<Twit> selectTwitInList(List<Twit> twits, String section, String action){
+        System.out.println("\nEnter -1 For Quit From '" + section + "' Section.");
+        System.out.println("Enter Twit Index To " + action + " : ");
+        int selectedIndex = ApplicationContext.helper.readInteger("-> ");
+        if (selectedIndex == -1){
+            ApplicationContext.menu.returnToDashboardAnnouncement();
+            return Optional.empty();
+        }
+        if (selectedIndex < 1 || selectedIndex > twits.size()) {
+            System.out.println("\nInvalid Index!");
+            ApplicationContext.menu.returnToDashboardAnnouncement();
+            return Optional.empty();
+        }
+
+        return Optional.of(twits.get(selectedIndex - 1));
+    }
+
     private void deleteTwit(Twit twit) {
         System.out.println("\nAre You Sure (y/n) ?");
         String input = ApplicationContext.scanner.nextLine();
@@ -136,37 +194,42 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
     private void printTwitsWithDetails(List<Twit> twits){
         int it = 1;
         for (Twit twit : twits) {
-            System.out.println(it + ".  " + twit.getText());
-
-            System.out.println("\n\tLikes Count : " + twit.getLikes().size());
-            if (twit.getLikes().size() > 0) {
-                List<Like> likes = new ArrayList<>(twit.getLikes());
-                likes.sort(Comparator.comparing(Like::getCreateAt).reversed());
-                int il = 1;
-                for (Like like : likes) {
-                    System.out.println("\t\t" + il + ".  " + like.getUser().getUsername() + " [ " + like.getUser().getFirstName() + " " + like.getUser().getLastName() + " ]");
-                    il++;
-                }
-            }
-
-            System.out.println("\n\tComment Count : " + twit.getComments().size());
-            if (twit.getComments().size() > 0) {
-                List<Comment> comments = new ArrayList<>(twit.getComments());
-                comments.sort(Comparator.comparing(Comment::getCreateAt).reversed());
-                int ic = 1;
-                for (Comment comment : comments) {
-                    System.out.println("\t\t" + ic + ".  " + comment.getText() + " ( " + comment.getUser().getUsername() + " [ " + comment.getUser().getFirstName() + " " + comment.getUser().getLastName() + " ] )");
-                    ic++;
-                }
-            }
-
-            System.out.println("\n\tPosted At : " + twit.getCreateAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
-
+            System.out.print(it);
+            printTwitWithDetails(twit);
             if (it != twits.size()) {
                 System.out.println("\n\n");
             }
             it++;
         }
+    }
+
+    private void printTwitWithDetails(Twit twit){
+        System.out.println(".  " + twit.getText());
+
+        System.out.println("\n\tLikes Count : " + twit.getLikes().size());
+        if (twit.getLikes().size() > 0) {
+            List<Like> likes = new ArrayList<>(twit.getLikes());
+            likes.sort(Comparator.comparing(Like::getCreateAt).reversed());
+            int il = 1;
+            for (Like like : likes) {
+                System.out.println("\t\t" + il + ".  " + like.getUser().getUsername() + " [ " + like.getUser().getFirstName() + " " + like.getUser().getLastName() + " ]");
+                il++;
+            }
+        }
+
+        System.out.println("\n\tComment Count : " + twit.getComments().size());
+        if (twit.getComments().size() > 0) {
+            List<Comment> comments = new ArrayList<>(twit.getComments());
+            comments.sort(Comparator.comparing(Comment::getCreateAt).reversed());
+            int ic = 1;
+            for (Comment comment : comments) {
+                System.out.println("\t\t" + ic + ".  " + comment.getText() + " ( " + comment.getUser().getUsername() + " [ " + comment.getUser().getFirstName() + " " + comment.getUser().getLastName() + " ] )");
+                ic++;
+            }
+        }
+
+        System.out.println("\n\tPosted At : " + twit.getCreateAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
+
     }
 
     private void printTwitsWithoutDetail(List<Twit> twits){

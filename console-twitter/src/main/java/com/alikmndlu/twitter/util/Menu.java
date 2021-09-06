@@ -24,15 +24,17 @@ public class Menu {
         System.out.println("            Dashboard            ");
         System.out.println("+ - - - - - - - - - - - - - - - +");
         System.out.println("|  1. Write New Twit            |");
-        System.out.println("|  2. View My Twits             |");
-        System.out.println("|  3. Edit My Twits             |");
-        System.out.println("|  4. View My Comments          |");
-        System.out.println("|  5. Edit My Comments          |");
-        System.out.println("|  6. View My Likes             |");
-        System.out.println("|  7. Unlike My Likes           |");
-        System.out.println("|  8. Edit Personal Information |");
-        System.out.println("|  9. Delete Account            |");
-        System.out.println("|  10. LogOut                   |");
+        System.out.println("|  2. View All Twits            |");
+        System.out.println("|  3. Search Users              |");
+        System.out.println("|  4. View My Twits             |");
+        System.out.println("|  5. Edit My Twits             |");
+        System.out.println("|  6. View My Comments          |");
+        System.out.println("|  7. Edit My Comments          |");
+        System.out.println("|  8. View My Likes             |");
+        System.out.println("|  9. Unlike My Likes           |");
+        System.out.println("|  10. Edit Personal Information|");
+        System.out.println("|  11. Delete Account           |");
+        System.out.println("|  12. LogOut                   |");
         System.out.println("+ - - - - - - - - - - - - - - - +");
     }
 
@@ -63,6 +65,20 @@ public class Menu {
         System.out.println("+ - - - - - - - - - - - - - - - +");
         System.out.println("|  1. Edit Comment Text         |");
         System.out.println("|  2. Delete Comment            |");
+        System.out.println("|  3. Back To Dashboard         |");
+        System.out.println("+ - - - - - - - - - - - - - - - +");
+    }
+
+    public void printViewTwitMenu(boolean isUserLikedThisTwit) {
+        lineSeparator();
+        System.out.println("            View Twit            ");
+        System.out.println("+ - - - - - - - - - - - - - - - +");
+        System.out.println("|  1. Post Comment              |");
+        if (isUserLikedThisTwit) {
+            System.out.println("|  2. Unlike Twit               |");
+        } else {
+            System.out.println("|  2. Like Twit                 |");
+        }
         System.out.println("|  3. Back To Dashboard         |");
         System.out.println("+ - - - - - - - - - - - - - - - +");
     }
