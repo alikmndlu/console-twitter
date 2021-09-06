@@ -3,6 +3,7 @@ package com.alikmndlu.twitter.service;
 import com.alikmndlu.twitter.base.service.BaseService;
 import com.alikmndlu.twitter.domain.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends BaseService<User, Long> {
@@ -18,4 +19,8 @@ public interface UserService extends BaseService<User, Long> {
     void refreshUser();
 
     void deleteAccount();
+
+    List<User> searchAndFindByUsername(String username);
+
+    void searchUser();
 }

@@ -34,7 +34,7 @@ public class Layer {
             switch (action){
                 case 1 -> ApplicationContext.twitService.writeTwit();
                 case 2 -> ApplicationContext.twitService.viewAllTwits();
-//                case 3 -> ApplicationContext.twitService.writeTwit();
+                case 3 -> ApplicationContext.userService.searchUser();
                 case 4 -> ApplicationContext.twitService.viewTwits();
                 case 5 -> ApplicationContext.twitService.editTwits();
                 case 6 -> ApplicationContext.commentService.viewUserComments();

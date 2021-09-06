@@ -105,6 +105,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
     @Override
     public void viewAllTwits() {
         List<Twit> twits = new ArrayList<>(findAll());
+        twits.sort(Comparator.comparing(Twit::getCreateAt).reversed());
 
         if (twits.size() == 0){
             System.out.println("There Is No Twit Yet!");
@@ -146,7 +147,9 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         ApplicationContext.menu.returnToDashboardAnnouncement();
     }
 
-    private Optional<Twit> selectTwitInList(List<Twit> twits, String section, String action){
+    @Override
+    public Optional<Twit> selectTwitInList(List<Twit> twits, String section, String action){
+        twits.sort(Comparator.comparing(Twit::getCreateAt).reversed());
         System.out.println("\nEnter -1 For Quit From '" + section + "' Section.");
         System.out.println("Enter Twit Index To " + action + " : ");
         int selectedIndex = ApplicationContext.helper.readInteger("-> ");
@@ -194,7 +197,7 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
     private void printTwitsWithDetails(List<Twit> twits){
         int it = 1;
         for (Twit twit : twits) {
-            System.out.print(it);
+            System.out.print(it + ".  ");
             printTwitWithDetails(twit);
             if (it != twits.size()) {
                 System.out.println("\n\n");
@@ -203,8 +206,9 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
         }
     }
 
-    private void printTwitWithDetails(Twit twit){
-        System.out.println(".  " + twit.getText());
+    @Override
+    public void printTwitWithDetails(Twit twit){
+        System.out.println(twit.getText());
 
         System.out.println("\n\tLikes Count : " + twit.getLikes().size());
         if (twit.getLikes().size() > 0) {
@@ -232,7 +236,9 @@ public class TwitServiceImpl extends BaseServiceImpl<Twit, Long, TwitRepository>
 
     }
 
-    private void printTwitsWithoutDetail(List<Twit> twits){
+    @Override
+    public void printTwitsWithoutDetail(List<Twit> twits){
+        twits.sort(Comparator.comparing(Twit::getCreateAt).reversed());
         int it = 1;
         for (Twit twit : twits) {
             System.out.println(it + ".  " + twit.getText());

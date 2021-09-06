@@ -7,6 +7,7 @@ import com.alikmndlu.twitter.service.impl.Authenticate;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long>
@@ -33,5 +34,13 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long>
         } catch (NoResultException noResultException) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<User> searchAndFindByUsername(String username) {
+        return entityManager.createQuery(
+                "from " + getModelClass().getSimpleName() + " where username like :username",
+                getModelClass()
+        ).setParameter("username", "%" + username + "%").getResultList();
     }
 }

@@ -25,11 +25,11 @@ public class DataInitializer {
                         ApplicationContext.userService.findByUsername("a").get()
                 )
         );
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         ApplicationContext.twitService.saveOrUpdate(
                 new Twit(
                         "ali kmndlu's 2nd twit",
@@ -45,11 +45,11 @@ public class DataInitializer {
                         ApplicationContext.userService.findByUsername("b").get()
                 )
         );
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         ApplicationContext.commentService.saveOrUpdate(
                 new Comment(
                         "nice twit",
@@ -65,11 +65,11 @@ public class DataInitializer {
                         ApplicationContext.twitService.findById(4L).get()
                 )
         );
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         ApplicationContext.likeService.saveOrUpdate(
                 new Like(
                         ApplicationContext.userService.findByUsername("c").get(),
